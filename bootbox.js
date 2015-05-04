@@ -647,7 +647,7 @@
       // can we just build up button elements instead? slower but neater. Then button
       // can just become a template too
       // Added CUSTOM ID to refer to these buttons elsewhere
-      buttonStr += "<button data-bb-handler='" + key + "' " +(button.id != null ? "id='" + button.id + "'" : "")+"' type='button' class='btn " + button.className + "'>" + button.label + "</button>";
+      buttonStr += "<button data-bb-handler='" + key + "' " +(button.id != null ? "id='" + button.id + "'" : "")+" type='button' class='btn " + button.className + "'>" + button.label + "</button>";
       callbacks[key] = button.callback;
     });
 
