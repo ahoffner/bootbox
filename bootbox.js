@@ -292,7 +292,56 @@
 
     return options;
   }
+  exports.success = function () {
+    var options;
 
+    options = mergeDialogOptions("alert", ["ok"], ["message", "callback"], arguments);
+
+    if (options.callback && !$.isFunction(options.callback)) {
+      throw new Error("alert requires callback property to be a function when provided");
+    }
+
+    if (typeof options.title == 'undefined') {
+      options.title = "<i class='fa fa-check-circle text-success'></i> Success";
+    }
+
+    /**
+     * overrides
+     */
+    options.buttons.ok.callback = options.onEscape = function () {
+      if ($.isFunction(options.callback)) {
+        return options.callback();
+      }
+      return true;
+    };
+
+    return exports.dialog(options);
+  }
+  exports.error = function () {
+    var options;
+
+    options = mergeDialogOptions("alert", ["ok"], ["message", "callback"], arguments);
+
+    if (options.callback && !$.isFunction(options.callback)) {
+      throw new Error("alert requires callback property to be a function when provided");
+    }
+
+    if (typeof options.title == 'undefined') {
+      options.title = "<i class='fa fa-exclamation-circle text-danger'></i> Error";
+    }
+
+    /**
+     * overrides
+     */
+    options.buttons.ok.callback = options.onEscape = function () {
+      if ($.isFunction(options.callback)) {
+        return options.callback();
+      }
+      return true;
+    };
+
+    return exports.dialog(options);
+  }
   exports.alert = function() {
     var options;
 
@@ -300,6 +349,10 @@
 
     if (options.callback && !$.isFunction(options.callback)) {
       throw new Error("alert requires callback property to be a function when provided");
+    }
+
+    if (typeof options.title == 'undefined') {
+      options.title = "<i class='fa fa-exclamation-triangle text-warning'></i> Alert";
     }
 
     /**
@@ -593,7 +646,8 @@
       // @TODO I don't like this string appending to itself; bit dirty. Needs reworking
       // can we just build up button elements instead? slower but neater. Then button
       // can just become a template too
-      buttonStr += "<button data-bb-handler='" + key + "' type='button' class='btn " + button.className + "'>" + button.label + "</button>";
+      // Added CUSTOM ID to refer to these buttons elsewhere
+      buttonStr += "<button data-bb-handler='" + key + (button.id != null ? "id='" + button.id + "'" : "")+"' type='button' class='btn " + button.className + "'>" + button.label + "</button>";
       callbacks[key] = button.callback;
     });
 
