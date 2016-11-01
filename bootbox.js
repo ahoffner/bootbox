@@ -663,6 +663,7 @@
 
     if (options.size === "extra-large") {
       innerDialog.addClass("modal-xl");
+    }
     else if (options.size === "large") {
       innerDialog.addClass("modal-lg");
     } else if (options.size === "small") {
